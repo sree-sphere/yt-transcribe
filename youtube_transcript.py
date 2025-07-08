@@ -1,11 +1,13 @@
-# pip install supadata openai langdetect
-
-import os
-import re
 from supadata import Supadata, SupadataError
 from langdetect import detect, LangDetectException
 import openai
 
+import argparse
+from urllib.parse import urlparse, parse_qs
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 # Configuration
 # Supadata API key
 SUPADATA_API_KEY = os.environ.get("SUPADATA_API_KEY")
@@ -65,7 +67,13 @@ def format_timestamp(milliseconds: int) -> str:
 
 # Main
 def main():
-    VIDEO_ID = "8enXRDlWguU"         # NovaraMedia video ID
+    parser = argparse.ArgumentParser(description='Fetch YouTube transcript')
+    parser.add_argument('url', help='YouTube video URL')
+    args = parser.parse_args()
+
+    parsed_url = urlparse(args.url)
+    VIDEO_ID = parse_qs(parsed_url.query)['v'][0]
+    print(f"Processing YouTube video ID: {VIDEO_ID}")
     OUTPUT_FILE = "transcript_en.txt"
 
     print("1) Fetching structured transcript from Supadata…")

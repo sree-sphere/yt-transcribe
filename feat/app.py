@@ -10,7 +10,7 @@ import numpy as np
 import os
 from typing import Iterator
 from io import StringIO
-from utils import write_vtt, write_srt
+from formatting_utils import write_vtt, write_srt
 
 st.set_page_config(page_title="YouTube Transcriber", page_icon="🗣", layout="wide")
 
